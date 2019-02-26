@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'hab/plan/tomlcheck'
+
+Hab::Plan::TomlCheck.new.run

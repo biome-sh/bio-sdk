@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'hab/plan/shellcheck'
+
+Hab::Plan::ShellCheck.new.run
