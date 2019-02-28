@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 module Hab
   module SDK
-    VERSION = "0.1.0"
+    VERSION = File.read(File.expand_path('../../../VERSION', __dir__)).chomp
 
     THE_HABITAT_SDK = <<~BANNER
       ████████╗██╗  ██╗███████╗    ██╗  ██╗ █████╗ ██████╗ ██╗████████╗ █████╗ ████████╗    ███████╗██████╗ ██╗  ██╗
