@@ -60,7 +60,7 @@ module Hab
       option :cache,
         long: '--cache FILE',
         default: '/tmp/hab-depot-sync.json',
-        description: 'Sync cache for resume to work'
+        description: 'Sync cache for resume to work. Default: /tmp/hab-depot-sync.json'
 
       def run
         parse_options
@@ -85,39 +85,37 @@ module Hab
         # PACKAGES
 
         if File.exist?(config[:cache])
-          puts "  Resuming job from #{config[:cache]}"
+          puts "  Using cached package list from #{config[:cache]}"
 
-          diff_packages = JSON.parse(IO.read(config[:cache])) rescue []
+          source_packages = JSON.parse(IO.read(config[:cache])) rescue []
 
-          if diff_packages.empty?
+          if source_packages.empty?
             puts "   Cache file invalid or empty. Delete it."
             exit 1
           end
         else
-          puts "Using only latest release for each package version" if config[:latest_release]
+          puts "Caching source packages from #{config[:source_depot]}"
 
-          if config[:latest_version]
-            puts "Using only latest version for each package"
-            config[:latest_release] = true
-          end
-
-          dest_packages = list_origin_packages(config[:dest_depot], config[:dest_auth_token], config[:origin], config[:channel])
-          dest_packages.map! { |x| x.delete('release'); x }.uniq! if config[:latest_release]
-          dest_packages.map! { |x| x.delete('version'); x }.uniq! if config[:latest_version]
-
+          # dest_packages = list_origin_packages(config[:dest_depot], config[:dest_auth_token], config[:origin], config[:channel])
           source_packages = list_origin_packages(config[:source_depot], config[:source_auth_token], config[:origin], config[:channel])
-          source_packages.map! { |x| x.delete('release'); x }.uniq! if config[:latest_release]
-          source_packages.map! { |x| x.delete('version'); x }.uniq! if config[:latest_version]
-
-          diff_packages = source_packages - dest_packages
-          File.write(config[:cache], diff_packages.to_json)
+          File.write(config[:cache], source_packages.to_json)
         end
 
 
-        len = diff_packages.length
+        puts "Using only latest release for each package version" if config[:latest_release]
+
+        if config[:latest_version]
+          puts "Using only latest version for each package"
+          config[:latest_release] = true
+        end
+
+        source_packages.map! { |x| x.delete('release'); x }.uniq! if config[:latest_release]
+        source_packages.map! { |x| x.delete('version'); x }.uniq! if config[:latest_version]
+
+        len = source_packages.length
         rj = len.to_s.length
 
-        diff_packages.each_with_index do |dp, idx|
+        source_packages.each_with_index do |dp, idx|
           puts "[#{(idx + 1).to_s.rjust(rj)}/#{len}] Syncing #{dp['name']}/#{dp['version'] || 'latest'}/#{dp['release'] || 'latest'}"
 
           puts "   Get source meta"
