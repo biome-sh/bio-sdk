@@ -1,5 +1,6 @@
 require 'tomlrb'
 require 'mixlib/cli'
+require 'pp'
 
 require 'hab/ui'
 require 'hab/sdk/version'

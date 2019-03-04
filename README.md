@@ -41,7 +41,17 @@ sudo hab pkg install ya/hab-sdk
 
 ## hab-depot-sync
 
+# TODO
 
+Possible commands:
+
+* TODO: hab-plan-bats
+* TODO: hab-plan-inspec
+* TODO: hab-plan-delmo
+* TODO: hab-plan-format - is it really needed?
+* TODO: hab-plan-precommit - integration with precommit?
+* TODO: hab-rubocop - is it good idea to integrate standard languages tools into build lifecycle?
+* TODO: hab-plan-service - service management lifecycle during build (for tests: up deps, run test, up main service, run test, down, etc)
 
 ## Development
 
