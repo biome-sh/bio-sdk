@@ -10,9 +10,8 @@ module Hab
       list_option :path, %w[plan.sh hooks/* lib/*]
       list_option :exclude, %w[SC1090 SC1091 SC2034]
 
-      # There is issue in mixlib: you can turn off it only via plan.toml
       option :'external-sources',
-        long: '--external-sources',
+        long: '--[no-]external-sources',
         boolean: true,
         default: true,
         description: "Allow 'source' outside of FILES. Default: true"
@@ -27,11 +26,11 @@ module Hab
         in: %w[sh bash dash ksh],
         description: 'Specify dialect.'
 
-      option :color,
-        long: '--color',
+      option :'color',
+        long: '--[no-]color',
         boolean: true,
         default: true,
-        description: 'Use color.'
+        description: 'Color output. Default: true'
 
       def make!
         glob_list_option(run_config, :path, run_config[:plan_context])
