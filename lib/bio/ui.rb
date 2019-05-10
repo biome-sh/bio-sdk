@@ -1,4 +1,4 @@
-module Hab
+module Bio
   module UI
     def header(str)
       puts "=> #{str}"

@@ -2,16 +2,16 @@ require 'tomlrb'
 require 'mixlib/cli'
 require 'pp'
 
-require 'hab/ui'
-require 'hab/sdk/version'
+require 'bio/ui'
+require 'bio/sdk/version'
 
 STDOUT.sync = true
 
-module Hab
+module Bio
   # This basic class defines all required behavior for cli commands
   class CLI
     include Mixlib::CLI
-    include Hab::UI
+    include Bio::UI
 
     # Config loaded from plan.toml
     attr_accessor :user_config
@@ -97,7 +97,7 @@ module Hab
     end
 
     def version_string
-      header "The Habitat SDK: #{Hab::SDK::VERSION}"
+      header "The Biome SDK: #{Bio::SDK::VERSION}"
     end
 
     # Adjusts and checks plan context
@@ -122,7 +122,7 @@ module Hab
     # This methods defines default section name.
     # Of course you can override this method
     def user_config_section
-      $PROGRAM_NAME.sub(/.*hab-plan-/, '').to_sym
+      $PROGRAM_NAME.sub(/.*bio-plan-/, '').to_sym
     end
 
     def load_user_config

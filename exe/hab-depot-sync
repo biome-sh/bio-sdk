@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'hab/depot/sync'
-
-Hab::Depot::Sync.new.run

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-module Hab
+module Bio
   module SDK
     VERSION = File.read(File.expand_path('../../../VERSION', __dir__)).chomp
 
-    THE_HABITAT_SDK = <<~BANNER
+    THE_BIOME_SDK = <<~BANNER
       ████████╗██╗  ██╗███████╗    ██╗  ██╗ █████╗ ██████╗ ██╗████████╗ █████╗ ████████╗    ███████╗██████╗ ██╗  ██╗
       ╚══██╔══╝██║  ██║██╔════╝    ██║  ██║██╔══██╗██╔══██╗██║╚══██╔══╝██╔══██╗╚══██╔══╝    ██╔════╝██╔══██╗██║ ██╔╝
          ██║   ███████║█████╗      ███████║███████║██████╔╝██║   ██║   ███████║   ██║       ███████╗██║  ██║█████╔╝
@@ -12,6 +12,6 @@ module Hab
          ╚═╝   ╚═╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝       ╚══════╝╚═════╝ ╚═╝  ╚═╝
     BANNER
 
-    POST_INSTALL_BANNER = THE_HABITAT_SDK + "version: #{VERSION}".rjust(110)
+    POST_INSTALL_BANNER = THE_BIOME_SDK + "version: #{VERSION}".rjust(110)
   end
 end

@@ -1,9 +1,9 @@
 # shellcheck shell=bash
 
 pkg_origin=ya
-pkg_name=hab-sdk
+pkg_name=bio-sdk
 pkg_version=$(tr -d '\n' < ../VERSION)
-pkg_description="The Habitat SDK"
+pkg_description="The Biome SDK"
 
 pkg_maintainer="Yauhen Artsiukhou <jsirex@gmail.com>"
 pkg_license=("MIT")

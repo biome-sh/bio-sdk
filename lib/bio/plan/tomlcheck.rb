@@ -1,9 +1,9 @@
 require 'mixlib/shellout'
-require 'hab/cli'
+require 'bio/cli'
 
-module Hab
+module Bio
   module Plan
-    class TomlCheck < Hab::CLI
+    class TomlCheck < Bio::CLI
       banner "#{File.basename($PROGRAM_NAME)} [PATH] (options)"
 
       use_separate_default_options true

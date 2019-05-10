@@ -6,7 +6,7 @@ require 'tempfile'
 
 STDOUT.sync = true
 
-module Hab
+module Bio
   module Depot
     class Sync
       include Mixlib::CLI
@@ -59,8 +59,8 @@ module Hab
 
       option :cache,
         long: '--cache FILE',
-        default: '/tmp/hab-depot-sync.json',
-        description: 'Sync cache for resume to work. Default: /tmp/hab-depot-sync.json'
+        default: '/tmp/bio-depot-sync.json',
+        description: 'Sync cache for resume to work. Default: /tmp/bio-depot-sync.json'
 
       def run
         parse_options

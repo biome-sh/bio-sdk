@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hab-sdk (0.1.1)
+    bio-sdk (0.1.1)
       cli-ui (~> 1.2)
       mixlib-cli (~> 2.0)
       mixlib-shellout (~> 2.4)
@@ -26,8 +26,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bio-sdk!
   bundler (~> 2.0)
-  hab-sdk!
   minitest (~> 5.0)
   pry (~> 0.12)
   rake (~> 10.0)

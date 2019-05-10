@@ -1,4 +1,4 @@
-# The Habitat SDK
+# The Biome SDK
 
 This project aimed to enhance habitat development experience by providing additional `hab`-commands.
 
@@ -6,7 +6,7 @@ This project aimed to enhance habitat development experience by providing additi
 
 # Quick Start
 
-## Use in Habitat Studio
+## Use in Biome Studio
 
 Add to `.studiorc` or run manually in studio:
 
@@ -14,11 +14,11 @@ Add to `.studiorc` or run manually in studio:
 # By default all required tools like shellcheck, bats are not installed automatically.
 # This reduces install time and adds flexibility.
 
-hab pkg install ya/hab-sdk core/shellcheck ya/tomlcheck core/bats
-hab pkg binlink -f ya/hab-sdk
-hab pkg binlink -f core/shellcheck
-hab pkg binlink -f core/bats
-hab pkg binlink -f ya/tomlcheck
+bio pkg install ya/bio-sdk core/shellcheck ya/tomlcheck core/bats
+bio pkg binlink -f ya/bio-sdk
+bio pkg binlink -f core/shellcheck
+bio pkg binlink -f core/bats
+bio pkg binlink -f ya/tomlcheck
 ```
 
 ## Install as CLI
@@ -26,7 +26,7 @@ hab pkg binlink -f ya/tomlcheck
 Make sure you have required binaries, like `shellcheck`.
 
 ``` bash
-sudo hab pkg install -fb ya/hab-sdk
+sudo bio pkg install -fb ya/bio-sdk
 ```
 
 ## Use in build process
@@ -36,12 +36,12 @@ Update your `plan.sh`:
 ``` bash
 ...
 # Make sure you have required binaries, like `shellcheck`.
-pkg_build_deps+=(ya/hab-sdk core/shellcheck)
+pkg_build_deps+=(ya/bio-sdk core/shellcheck)
 
 ...
 
 do_prepare() {
-  hab-plan-shellcheck $PLAN_CONTEXT
+  bio-plan-shellcheck $PLAN_CONTEXT
 }
 ```
 
@@ -49,12 +49,12 @@ do_prepare() {
 
 ## Plan Commands
 
-* `hab-plan-shellcheck` - runs shellcheck
-* `hab-plan-tomlcheck` - runs tomlcheck
+* `bio-plan-shellcheck` - runs shellcheck
+* `bio-plan-tomlcheck` - runs tomlcheck
 
 ## Depot Commands
 
-* `hab-depot-sync` - mirrors habitat builders
+* `bio-depot-sync` - mirrors habitat builders
 
 # Configuration
 
@@ -62,7 +62,7 @@ Add `plan.toml` file into `$PLAN_CONTEXT`, near the `plan.sh` file.
 
 Plan Configuration principles are:
 
-* Each section name maps to a corresponding `hab-plan-<thing>` cli.
+* Each section name maps to a corresponding `bio-plan-<thing>` cli.
 * Each command line option maps to corresponding option inside the section
 * Configuration applies in the following order (last wins):
 * * Default Options (sane defaults are embedded into cli)
@@ -82,7 +82,7 @@ Plan Configuration principles are:
 Here is `plan.toml` example:
 
 ``` toml
-# Name of the hab-plan-<thing>
+# Name of the bio-plan-<thing>
 [shellcheck]
 # Debug can be turned on separately for each cli
 debug = true
@@ -109,13 +109,13 @@ add-path = ["config/*.toml"]
 
 ## CLI Usage Example
 
-Each cli shipped with small but understandable help documentation. Here is example of `hab-plan-shellcheck`:
+Each cli shipped with small but understandable help documentation. Here is example of `bio-plan-shellcheck`:
 
 ``` bash
 
-# hab-plan-shellcheck --help
-=> The Habitat SDK: 0.1.0
-hab-plan-shellcheck [PATH] (options)
+# bio-plan-shellcheck --help
+=> The Biome SDK: 0.1.0
+bio-plan-shellcheck [PATH] (options)
         --add-exclude item1,item2,.. Add item to exclude list. Default: ["SC1090", "SC1091", "SC2034"]
         --add-path item1,item2,..    Add item to path list. Default: ["plan.sh", "hooks/*", "lib/*"]
         --color                      Use color.
@@ -135,13 +135,13 @@ hab-plan-shellcheck [PATH] (options)
 
 Possible commands:
 
-* TODO: hab-plan-render
-* TODO: hab-plan-bats
-* TODO: hab-plan-inspec
-* TODO: hab-plan-delmo
-* TODO: hab-plan-format - is it really needed?
-* TODO: hab-plan-precommit - integration with precommit?
-* TODO: hab-plan-service - service management lifecycle during build (for tests: up deps, run test, up main service, run test, down, etc)
+* TODO: bio-plan-render
+* TODO: bio-plan-bats
+* TODO: bio-plan-inspec
+* TODO: bio-plan-delmo
+* TODO: bio-plan-format - is it really needed?
+* TODO: bio-plan-precommit - integration with precommit?
+* TODO: bio-plan-service - service management lifecycle during build (for tests: up deps, run test, up main service, run test, down, etc)
 
 Features:
 
@@ -155,7 +155,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/habitat-plans/hab-sdk](https://github.com/habitat-plans/hab-sdk).
+Bug reports and pull requests are welcome on GitHub at [https://github.com/habitat-plans/bio-sdk](https://github.com/habitat-plans/bio-sdk).
 
 ## License
 

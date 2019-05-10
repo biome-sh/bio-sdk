@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "hab/sdk/version"
+require "bio/sdk/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "hab-sdk"
-  spec.version       = Hab::SDK::VERSION
+  spec.name          = "bio-sdk"
+  spec.version       = Bio::SDK::VERSION
   spec.authors       = ["Yauhen Artsiukhou"]
   spec.email         = ["jsirex@gmail.com"]
 
-  spec.summary       = %q{The Habitat SDK}
-  spec.description   = %q{The Habitat SDK: Set of useful CLIs to enhance habitat development experience}
-  spec.homepage      = "https://github.com/habitat-plans/hab-sdk"
+  spec.summary       = %q{The Biome SDK}
+  spec.description   = %q{The Biome SDK: Set of useful CLIs to enhance habitat development experience}
+  spec.homepage      = "https://github.com/habitat-plans/bio-sdk"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.
@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.post_install_message = Hab::SDK::POST_INSTALL_BANNER
+  spec.post_install_message = Bio::SDK::POST_INSTALL_BANNER
 
   spec.add_dependency "tomlrb", "~> 1.2"
   spec.add_dependency "cli-ui", "~> 1.2"
