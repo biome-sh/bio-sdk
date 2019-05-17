@@ -8,7 +8,7 @@ module Bio
 
       use_separate_default_options true
       list_option :path, %w[plan.sh hooks/* lib/*]
-      list_option :exclude, %w[SC1090 SC1091 SC2034]
+      list_option :exclude, %w[SC1008 SC1090 SC1091 SC2034 SC2239]
 
       option :'external-sources',
         long: '--[no-]external-sources',
