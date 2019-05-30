@@ -130,7 +130,8 @@ module Bio
       plan_toml = File.expand_path(plan_toml, config[:plan_context])
 
       if File.exist?(plan_toml)
-        @user_config = Tomlrb.load_file(plan_toml, symbolize_keys: true)[user_config_section] || {}
+        # If we unable to load plan.toml ignore it completely
+        @user_config = Tomlrb.load_file(plan_toml, symbolize_keys: true)[user_config_section] rescue nil || {}
       else
         warning "Ignoring absent plan.toml at #{config[:plan_toml]}" if config[:plan_toml]
         @user_config = {}
