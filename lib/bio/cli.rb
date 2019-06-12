@@ -29,7 +29,7 @@ module Bio
       long: '--plan-toml FILE',
       default: 'plan.toml',
       on: :tail,
-      description: 'Path to toml config. Relative to plan context. Optional. Default: plan.toml'
+      description: 'Path to toml config. Relative to plan context. Optional'
 
     option :debug,
       long: '--debug',
@@ -126,18 +126,25 @@ module Bio
     end
 
     def load_user_config
-      plan_toml = config[:plan_toml] || default_config[:plan_toml]
-      plan_toml = File.expand_path(plan_toml, config[:plan_context])
+      plan_toml = [
+        config[:plan_toml],
+        default_config[:plan_toml],
+        File.join('..', default_config[:plan_toml]),
+        File.join('..', '..', default_config[:plan_toml]),
+        File.join('..', '..', '..', default_config[:plan_toml])
+      ].compact.map { |pt| File.expand_path(pt, config[:plan_context]) }
 
-      if File.exist?(plan_toml)
+      plan_toml = plan_toml.find { |pt| File.exist?(pt) }
+
+      if plan_toml
+        config[:plan_toml] = plan_toml
+
         # If we unable to load plan.toml ignore it completely
-        @user_config = Tomlrb.load_file(plan_toml, symbolize_keys: true)[user_config_section] rescue nil || {}
+        @user_config = (Tomlrb.load_file(plan_toml, symbolize_keys: true)[user_config_section] || {}) rescue {}
       else
         warning "Ignoring absent plan.toml at #{config[:plan_toml]}" if config[:plan_toml]
         @user_config = {}
       end
-
-      config[:plan_toml] = plan_toml
     end
 
     def make_run_config
