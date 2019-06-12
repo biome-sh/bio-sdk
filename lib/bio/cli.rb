@@ -136,14 +136,21 @@ module Bio
 
       plan_toml = plan_toml.find { |pt| File.exist?(pt) }
 
-      if plan_toml
-        config[:plan_toml] = plan_toml
-
-        # If we unable to load plan.toml ignore it completely
-        @user_config = (Tomlrb.load_file(plan_toml, symbolize_keys: true)[user_config_section] || {}) rescue {}
-      else
+      @user_config = {}
+      unless plan_toml
         warning "Ignoring absent plan.toml at #{config[:plan_toml]}" if config[:plan_toml]
-        @user_config = {}
+        return
+      end
+
+      config[:plan_toml] = plan_toml
+
+      begin
+        @user_config = Tomlrb.load_file(plan_toml, symbolize_keys: true)
+        @user_config = @user_config[user_config_section] || {}
+      rescue Tomlrb::ParseError => e
+        warning "Unable to load provided toml: #{e.message.gsub("\n", ' ')}"
+      rescue RuntimeError => e
+        warning "Unexpected error during load user config: #{e.message}"
       end
     end
 
