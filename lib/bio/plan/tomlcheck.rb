@@ -7,7 +7,13 @@ module Bio
       banner "#{File.basename($PROGRAM_NAME)} [PATH] (options)"
 
       use_separate_default_options true
-      list_option :path, %w[default.toml plan.toml]
+      list_option :path, [
+        'default.toml',
+        'plan.toml',
+        '../plan.toml',
+        '../../plan.toml',
+        '../../../plan.toml'
+      ]
 
       def make!
         glob_list_option(run_config, :path, run_config[:plan_context])
