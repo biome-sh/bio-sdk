@@ -97,7 +97,7 @@ module Bio
     end
 
     def version_string
-      header "The Biome SDK: #{Bio::SDK::VERSION}"
+      header "The Biome #{File.basename($PROGRAM_NAME)}: #{Bio::SDK::VERSION}"
     end
 
     # Adjusts and checks plan context
