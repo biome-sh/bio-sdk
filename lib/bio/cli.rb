@@ -112,6 +112,10 @@ module Bio
         raise "Plan context was not found!"
       end
 
+      # In Chef Habitat the `results` directory is a vagrant and appears in current directory.
+      # Sometimes it annoying, but let memorize where we were before changing directory to the plan context
+      default_config[:results_dir] = File.join(Dir.pwd, 'results')
+
       Dir.chdir pc
 
       config[:plan_context] = pc

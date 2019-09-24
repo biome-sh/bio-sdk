@@ -14,11 +14,9 @@ Add to `.studiorc` or run manually in studio:
 # By default all required tools like shellcheck, bats are not installed automatically.
 # This reduces install time and adds flexibility.
 
-bio pkg install ya/bio-sdk core/shellcheck ya/tomlcheck core/bats
-bio pkg binlink -f ya/bio-sdk
-bio pkg binlink -f core/shellcheck
-bio pkg binlink -f core/bats
-bio pkg binlink -f ya/tomlcheck
+bio pkg install -fb ya/bio-sdk
+bio pkg install -fb core/shellcheck
+bio pkg install -fb ya/tomlcheck
 ```
 
 ## Install as CLI
@@ -45,20 +43,9 @@ do_prepare() {
 }
 ```
 
-# Commands
-
-## Plan Commands
-
-* `bio-plan-shellcheck` - runs shellcheck
-* `bio-plan-tomlcheck` - runs tomlcheck
-
-## Depot Commands
-
-* `bio-depot-sync` - mirrors habitat builders
-
 # Configuration
 
-Add `plan.toml` file into `$PLAN_CONTEXT`, near the `plan.sh` file.
+Optionally you can add `plan.toml` file into `$PLAN_CONTEXT`, near the `plan.sh` file or in parent directory.
 
 Plan Configuration principles are:
 
@@ -105,37 +92,96 @@ remove-exclude = ["SC1090"]
 # check also all toml files in the config directory
 add-path = ["config/*.toml"]
 
+[rendercheck]
+# Make bio-plan-render to print templates to stdout
+print = true
 ```
 
-## CLI Usage Example
+# Commands
 
-Each cli shipped with small but understandable help documentation. Here is example of `bio-plan-shellcheck`:
+## bio-plan-tomlcheck
 
-``` bash
+Validates your toml files using `tomlcheck`.
 
-# bio-plan-shellcheck --help
-=> The Biome SDK: 0.1.0
-bio-plan-shellcheck [PATH] (options)
-        --add-exclude item1,item2,.. Add item to exclude list. Default: ["SC1090", "SC1091", "SC2034"]
-        --add-path item1,item2,..    Add item to path list. Default: ["plan.sh", "hooks/*", "lib/*"]
-        --color                      Use color.
-        --external-sources           Allow 'source' outside of FILES. Default: true
-        --format FORMAT              Output format. (included in ['checkstyle', 'gcc', 'json', 'tty'])
-        --remove-exclude item1,item2,..
-                                     Remove item from exclude list
-        --remove-path item1,item2,.. Remove item from path list
-        --shell DIALECT              Specify dialect. (included in ['sh', 'bash', 'dash', 'ksh'])
-        --debug                      Debugs configuration and commands.
-        --plan-context DIR           Dir with plan.sh or habitat directory. Defaults to current directory.
-        --plan-toml FILE             Path to toml config. Relative to plan context. Optional. Default: plan.toml
+## bio-plan-shellcheck
+
+Validates your shell scripts using `shellcheck`
+
+## bio-plan-rendercheck
+
+Renders and test your configuration. By default `bio-plan-rendercheck` renders all configuration to `results/tests/render/default` directory.
+
+`bio-plan-rendercheck` works with suites - directories with or without files. By default it uses `tests/render/*` directories relative to plan context. If no suites found emulates empty default one.
+
+For each suite `bio-plan-rendercheck` tries to load `user.toml`, `mock-data.json`, `default.toml` from `suite` directory, suites' parent directory or from plan context directory.
+Each suite `bio-plan-rendercheck` renders templates into `results/tests/render/<suite>`
+For each suite `bio-plan-rendercheck` compares using `diff` rendered files in `results/tests/render/<suite>` with `tests/render/<suite>` in plan context.
+
+If expected template or config is absent it safely ignored.
+
+You can test different scenarios using `suites`. Let imagine we need to test 3 configuration scenarios for a package:
+
+* `standalone` - configuration with most defaults
+* `cluster` - mode for service rings
+* `custom` - custom user configuration for some edge cases
+
+Create suites directories:
+
+```bash
+mkdir -p tests/render/{standalone,cluster,custom}
+```
+
+Create mock data files. We can share same file by creating it in the suites' parent directory:
+
+```bash
+vim tests/render/mock-data.json
+
+# But for cluster suite we want another mock-data
+vim tests/render/cluster/mock-data.json
+```
+
+Create custom user configuration:
+
+```bash
+vim tests/render/custom/user.toml
+```
+
+Run rendering:
+
+```bash
+bio-plan-rendercheck
+```
+
+On success you will get number of rendered files:
 
 ```
+results/tests/render/standalone/config/config.json
+results/tests/render/standalone/hooks/run
+results/tests/render/cluster/config/config.json
+results/tests/render/cluster/hooks/run
+results/tests/render/custom/config/config.json
+results/tests/render/custom/hooks/run
+```
+
+Now inspect files. If they are ok we can easily convert them to _expected_ templates:
+
+```bash
+cp -r results/tests tests
+```
+
+Now suites contain configuration files so `bio-plan-rendercheck` will compare _expected_ and _actual_.
+
+
+## Depot Commands
+
+* `bio-depot-sync` - mirrors habitat builders
+
+
 
 # TODO
 
 Possible commands:
 
-* TODO: bio-plan-render
 * TODO: bio-plan-bats
 * TODO: bio-plan-inspec
 * TODO: bio-plan-delmo
@@ -147,16 +193,16 @@ Features:
 
 * Better TUI
 
-## Development
+# Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-## Contributing
+# Contributing
 
 Bug reports and pull requests are welcome on GitHub at [https://github.com/habitat-plans/bio-sdk](https://github.com/habitat-plans/bio-sdk).
 
-## License
+# License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
