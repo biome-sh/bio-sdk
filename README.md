@@ -172,11 +172,9 @@ cp -r results/tests tests
 Now suites contain configuration files so `bio-plan-rendercheck` will compare _expected_ and _actual_.
 
 
-## Depot Commands
+## bio-depot-sync
 
-* `bio-depot-sync` - mirrors habitat builders
-
-
+Mirrors habitat builders
 
 # TODO
 
