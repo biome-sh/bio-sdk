@@ -4,15 +4,20 @@ require 'bio/cli'
 module Bio
   module Plan
     class TomlCheck < Bio::CLI
-      banner "#{File.basename($PROGRAM_NAME)} [PATH] (options)"
+      banner "#{File.basename($PROGRAM_NAME)} [PLANCONTEXT] (options)"
 
       use_separate_default_options true
       list_option :path, [
         'default.toml',
+        'user.toml',
         'plan.toml',
         '../plan.toml',
         '../../plan.toml',
-        '../../../plan.toml'
+        '../../../plan.toml',
+        'tests/render/user.toml',
+        'tests/render/default.toml',
+        'tests/render/*/user.toml',
+        'tests/render/*/default.toml'
       ]
 
       def make!
