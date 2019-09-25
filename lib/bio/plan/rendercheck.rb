@@ -79,6 +79,8 @@ module Bio
             exit 1 unless validate_template(template, suite)
           end
         end
+      ensure
+        ensure_permissions
       end
 
       def render_template(template, suite)

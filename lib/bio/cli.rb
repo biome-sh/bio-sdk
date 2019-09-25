@@ -1,6 +1,7 @@
 require 'tomlrb'
 require 'mixlib/cli'
 require 'pp'
+require 'fileutils'
 
 require 'bio/ui'
 require 'bio/sdk/version'
@@ -202,6 +203,16 @@ module Bio
       cfg[list].map! { |x| Dir.glob(x, base: base) }
       cfg[list].flatten!
       cfg[list].uniq!
+    end
+
+    # Make sure all file generated under `results` directory has proper owner
+    def ensure_permissions
+      plan_stat = File.stat(run_config[:plan_context])
+
+      opts = {verbose: run_config[:debug]}
+      FileUtils.chown_R(plan_stat.uid, plan_stat.gid, run_config[:results_dir], opts)
+    rescue
+      warning "Unable to set owner to #{plan_stat.uid} for #{run_config[:results_dir]}. Ignoring"
     end
   end
 end
