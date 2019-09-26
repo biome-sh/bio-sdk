@@ -61,7 +61,7 @@ module Bio
         run_config[:suite] = ['tests/render/default'] if run_config[:suite].empty?
 
         run_config[:suite].each do |suite|
-          header "Processing #{suite}"
+          header "Rendering suite #{suite}"
 
           run_config[:template].each do |template|
             note "Rendering #{template}"
@@ -71,7 +71,7 @@ module Bio
         end
 
         run_config[:suite].each do |suite|
-          header "Processing #{suite}"
+          header "Validating suite #{suite}"
 
           run_config[:template].each do |template|
             note "Validating #{template}"
