@@ -174,7 +174,36 @@ Now suites contain configuration files so `bio-plan-rendercheck` will compare _e
 
 ## bio-depot-sync
 
-Mirrors habitat builders
+This command helps to mirror/sync Habitat/Biome SaaS Builder with another Builder, usually on-prem one.
+
+1. It mirrors whole channel from specified origin
+2. It skips artifacts already exists in dest builder
+3. It does not create any temporary artifact files and safes disk space
+4. If package exist on destination it ensures that package promoted to specified channel
+
+```
+bio-depot-sync (options)
+        --cache FILE                 Sync cache for resume to work. Default: /tmp/bio-depot-sync.json
+        --channel CHANNEL            Channel to mirror. Default: stable
+        --dest-auth-token TOKEN      Destination auth token to use.
+        --dest-depot URL             Destination depot to sync artifacts from. Default: https://bldr.habitat.sh
+        --latest-release             If true - copy only latest release for each version.
+        --latest-version             If true - copy only latest version for each package.
+        --origin ORIGIN              Origin to mirror. Default: core
+        --read-timeout TIMEOUT       Timeout for Net::HTTP operations. Default: 120.
+        --source-auth-token TOKEN    Source auth token to use.
+        --source-depot URL           Source depot to sync artifacts from. Default: https://bldr.habitat.sh
+```
+
+Usage example:
+
+```
+bio pkg install -fb ya/bio-sdk
+for origin in core habitat chef ya; do
+  echo bio-depot-sync --origin $origin --dest-depot $builder_url --dest-auth-token $auth_token --latest-version
+done
+```
+
 
 # TODO
 
