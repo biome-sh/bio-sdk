@@ -38,6 +38,11 @@ module Bio
       on: :tail,
       description: 'Debugs configuration and commands.'
 
+    option :bio_cli,
+      long: '--bio-cli CLI',
+      default: 'bio',
+      description: 'Set binary to use. Defaults to bio'
+
     # List options is used for array or list in configuration and cli
     # Usually I want to define add-<thing> and remove-<thing>:
     # Library can have its default values and I don't want actually to

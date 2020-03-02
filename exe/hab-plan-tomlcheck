@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'bio/plan/tomlcheck'
+
+Bio::Plan::TomlCheck::option :bio_cli,
+  long: '--hab-cli CLI',
+  default: 'hab',
+  description: 'Set binary to use. Defaults to hab'
+
+Bio::Plan::TomlCheck.new.run

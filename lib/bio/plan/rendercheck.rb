@@ -44,11 +44,6 @@ module Bio
         default: true,
         description: 'Defaults to be quiet.'
 
-      option :bio_cli,
-        long: '--bio-cli CLI',
-        default: 'bio',
-        in: %w[bio hab],
-        description: 'Set binary to use between bio or hab. Defaults to bio'
 
       def make!
         glob_list_option(run_config, :template, run_config[:plan_context])

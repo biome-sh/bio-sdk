@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'bio/plan/rendercheck'
+
+Bio::Plan::RenderCheck::option :bio_cli,
+  long: '--hab-cli CLI',
+  default: 'hab',
+  description: 'Set binary to use. Defaults to hab'
+
+Bio::Plan::RenderCheck.new.run
