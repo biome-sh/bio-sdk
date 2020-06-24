@@ -1,6 +1,6 @@
 # shellcheck shell=bash
 
-pkg_origin=ya
+pkg_origin=biome
 pkg_name=bio-sdk
 pkg_version=$(tr -d '\n' < ../VERSION)
 pkg_description="The Biome SDK"

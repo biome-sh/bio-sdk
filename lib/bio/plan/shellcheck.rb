@@ -7,7 +7,7 @@ module Bio
       banner "#{File.basename($PROGRAM_NAME)} [PLANCONTEXT] (options)"
 
       use_separate_default_options true
-      list_option :path, %w[plan.sh hooks/* lib/**/*]
+      list_option :path, %w[plan.sh hooks/* lib/**/*.sh config/**/*.sh config_install/**/*.sh]
       list_option :exclude, %w[SC1008 SC1090 SC1091 SC2034 SC2239]
 
       option :'external-sources',

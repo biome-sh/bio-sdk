@@ -1,0 +1,34 @@
+#!{{pkgPathFor "core/bash"}}/bin/bash
+# -*- mode: shell-script -*-
+# shellcheck shell=bash
+
+## Meta section: when run hook is changed service will be restarted.
+## The following changes in configuration must trigger restart:
+##
+## cfg.main.port: {{cfg.main.port}}
+## cfg.main.listen_addresses: {{cfg.main.listen_addresses}}
+## cfg.main.shared_preload_libraries: {{cfg.main.shared_preload_libraries}}
+##
+## cfg.pgtune.max_connections: {{cfg.pgtune.max_connections}}
+
+exec 2>&1
+
+set -e
+
+source '{{pkg.svc_config_path}}/functions.sh'
+
+ensure_directories
+
+maybe_exec_leader
+maybe_exec_follower
+
+maybe_exec_standalone
+
+# Should never get here
+echo '====================================================='
+echo '= If you see me then something strange is happened. ='
+echo '= Database was not started. Wait a bit and give up. ='
+echo '====================================================='
+sleep 5
+
+exit 3

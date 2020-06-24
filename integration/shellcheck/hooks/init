@@ -1,0 +1,14 @@
+#!{{pkgPathFor "core/bash"}}/bin/bash
+# -*- mode: shell-script -*-
+# shellcheck shell=bash
+
+exec 2>&1
+
+set -e
+
+source '{{pkg.svc_config_path}}/functions.sh'
+
+ensure_directories
+
+maybe_pg_initdb
+maybe_pg_basebackup

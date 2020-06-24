@@ -1,0 +1,29 @@
+#!{{pkgPathFor "core/bash"}}/bin/bash
+# -*- mode: shell-script -*-
+# shellcheck shell=bash
+
+exec 2>&1
+
+set -e
+
+source '{{pkg.svc_config_path}}/functions.sh'
+
+# post-run is much faster than database
+sleep 2
+
+ensure_connection
+
+# Replication stuff
+maybe_pg_promote
+ensure_replication_slots
+
+# System users
+ensure_user_superuser
+ensure_user_replication
+ensure_user_rewind
+ensure_user_backup
+ensure_user_dgp
+
+# Application related stuff
+maybe_create_databases
+ensure_user_application

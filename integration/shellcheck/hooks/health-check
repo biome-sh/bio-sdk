@@ -1,0 +1,18 @@
+#!{{pkgPathFor "core/bash"}}/bin/bash
+# -*- mode: shell-script -*-
+# shellcheck shell=bash
+
+exec 2>&1
+
+set -e
+
+source '{{pkg.svc_config_path}}/functions.sh'
+
+# pg_isready returns 0 to the shell if the server is accepting connections
+# normally, 1 if the server is rejecting connections (for example during
+# startup), 2 if there was no response to the connection attempt, and 3 if no
+# attempt was made (for example due to invalid parameters).
+
+for db in $USER_APPLICATION_DATABASES; do
+    pg_isready --port "$PG_PORT" --dbname "$db" --username "$USER_SUPERUSER_NAME" --quiet
+done
