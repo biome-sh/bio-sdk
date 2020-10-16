@@ -111,9 +111,9 @@ module Bio
       pc = cli_arguments.first || config[:plan_context] || default_config[:plan_context]
       pc = File.expand_path(pc)
 
-      pc = "#{pc}/habitat" if File.exist?("#{pc}/habitat/plan.sh")
+      pc = "#{pc}/habitat" if File.directory?("#{pc}/habitat")
 
-      unless File.exist?("#{pc}/plan.sh")
+      unless File.exist?(pc)
         warning "Plan context was not found!"
         raise "Plan context was not found!"
       end
