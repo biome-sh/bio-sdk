@@ -14,7 +14,7 @@ Add to `.studiorc` or run manually in studio:
 # By default all required tools like shellcheck, bats are not installed automatically.
 # This reduces install time and adds flexibility.
 
-bio pkg install -fb ya/bio-sdk
+bio pkg install -fb biome/bio-sdk
 bio pkg install -fb core/shellcheck
 bio pkg install -fb ya/tomlcheck
 ```
@@ -24,7 +24,7 @@ bio pkg install -fb ya/tomlcheck
 Make sure you have required binaries, like `shellcheck`.
 
 ``` bash
-sudo bio pkg install -fb ya/bio-sdk
+sudo bio pkg install -fb biome/bio-sdk
 ```
 
 ## Use in build process
@@ -34,7 +34,7 @@ Update your `plan.sh`:
 ``` bash
 ...
 # Make sure you have required binaries, like `shellcheck`.
-pkg_build_deps+=(ya/bio-sdk core/shellcheck)
+pkg_build_deps+=(biome/bio-sdk core/shellcheck)
 
 ...
 
@@ -228,7 +228,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 # Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/habitat-plans/bio-sdk](https://github.com/habitat-plans/bio-sdk).
+Bug reports and pull requests are welcome on GitHub at [https://github.com/biome-sh/bio-sdk](https://github.com/biome-sh/bio-sdk).
 
 # License
 
